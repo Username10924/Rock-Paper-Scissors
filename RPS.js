@@ -32,62 +32,75 @@ function getHumanChoice(){
 function playRound(humanChoice, computerChoice){
     // All tie conditions
     if(humanChoice.localeCompare(computerChoice, undefined, { sensitivity: 'accent' }) == 0){
-        console.log(`Tie! ${humanChoice} ties with ${computerChoice}`);
-        return 0;
+        return `0+Tie! ${humanChoice} ties with ${computerChoice}`;
     }
 
     // Rock conditions
     else if(!humanChoice.localeCompare("rock", undefined, { sensitivity: 'accent' }) && !computerChoice.localeCompare("paper", undefined, { sensitivity: 'accent' })){
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-        return -1;
+        return `-1+You lose! ${computerChoice} beats ${humanChoice}`;
     }
     else if(!humanChoice.localeCompare("rock", undefined, { sensitivity: 'accent' }) && !computerChoice.localeCompare("scissors", undefined, { sensitivity: 'accent' })){
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-        return 1;
+        return `1+You win! ${humanChoice} beats ${computerChoice}`;
     }
 
     // Paper conditions
     else if(!humanChoice.localeCompare("Paper", undefined, { sensitivity: 'accent' }) && !computerChoice.localeCompare("rock", undefined, { sensitivity: 'accent' })){
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-        return 1;
+        return `1+You win! ${humanChoice} beats ${computerChoice}`
     }
     else if(!humanChoice.localeCompare("Paper", undefined, { sensitivity: 'accent' }) && !computerChoice.localeCompare("scissors", undefined, { sensitivity: 'accent' })){
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-        return -1;
+        return `-1+You lose! ${computerChoice} beats ${humanChoice}`
     }
     // Scissors conditions
     else if(!humanChoice.localeCompare("Scissors", undefined, { sensitivity: 'accent' }) && !computerChoice.localeCompare("paper", undefined, { sensitivity: 'accent' })){
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-        return 1;
+        return `1+You win! ${humanChoice} beats ${computerChoice}`
     }
     else if(!humanChoice.localeCompare("Scissors", undefined, { sensitivity: 'accent' }) && !computerChoice.localeCompare("rock", undefined, { sensitivity: 'accent' })){
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-        return -1;
+        return `-1+You lose! ${computerChoice} beats ${humanChoice}`
     }
     else
         console.log("Error in playRound()");
-    return 0;
+    return "error";
 }
 
-function playGame(){
-    console.log("Game started!")
-    let humanScore = 0;
-    let computerScore = 0;
 
-    for(i = 0; i < 5; i++){
-        switch(playRound(getHumanChoice(), getComputerChoice())){
-            case 1:
-                humanScore++;
-                break;
-            case -1:
-                computerScore++;
-                break;
-            case 0:
-            default:
-                break;
+let btn = document.querySelectorAll("button");
+btn.forEach((button) => {
+    button.addEventListener("mouseenter", () => {
+        button.style.boxShadow = "#83E4F1 0px 5px 15px";
+    });
+    button.addEventListener("mouseleave", () => {
+        button.style.boxShadow = "none";
+    });
+});
+
+let result = document.querySelector(".result");
+let score = document.createElement("h3");
+let announcement = document.createElement("h3");
+let points = [0,0];
+result.appendChild(score);
+result.appendChild(announcement);
+let option = document.querySelector(".options");
+
+option.addEventListener("click", (e) => {
+    if(points[0] != 5 && points[1] != 5){
+        let t = e.target;
+        if(e.target == "[object HTMLButtonElement]"){
+            let scoreResultSplit = playRound(t.id, getComputerChoice()).split("+");
+            score.textContent = scoreResultSplit[1];
+            if(scoreResultSplit[0] == 1)
+                points[0]++;
+            else if(scoreResultSplit[0] == -1)
+                points[1]++;
+            announcement.textContent = `You: ${points[0]} | Bot: ${points[1]}`;
         }
-    }
-    console.log(`Final results:\nYour score: ${humanScore}\nComputer score: ${computerScore}`);
 }
-
-playGame();
+    if(points[0] == 5){
+        score.textContent = "You win!"
+        score.style.color = "green";
+    }
+    else if(points[1] == 5){
+        score.textContent = "You lose!";
+        score.style.color = "red";
+        e.preventDefault;
+    }
+})

@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Inter:700|Inter:400');
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: #03171b;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter';
+    color: #d5f4fa;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
+    margin-top: 48px;
+    margin-bottom: 48px;
+}
+.options button{
+    width: 120px;
+    height: 50px;
+    background-color: #85e5f1;
+    border-style: none;
+    border-radius: 10px;
+    color: #03171b;
+    font-family: inherit;
+    font-size: 16px;
+}
+p{
+    text-align: center;
+    bottom: 0;
+    position: fixed;
+    margin-bottom: 10px;
+}
